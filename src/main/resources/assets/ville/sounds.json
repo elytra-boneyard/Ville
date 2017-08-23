@@ -1,0 +1,21 @@
+{
+    "entity.pigman.ambient": {
+        "sounds": [
+          "ville:mob/pigman/say1",
+          "ville:mob/pigman/say2"
+        ],
+        "subtitle": "subtitles.entity.pig.ambient"
+      },
+      "entity.pigman.death": {
+        "sounds": [
+          "ville:mob/pigman/death"
+        ],
+        "subtitle": "subtitles.entity.pig.death"
+      },
+      "entity.pigman.hurt": {
+        "sounds": [
+          "ville:mob/pigman/hurt"
+        ],
+        "subtitle": "subtitles.entity.pig.hurt"
+      }
+}
