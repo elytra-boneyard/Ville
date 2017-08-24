@@ -4,19 +4,19 @@ ext {
 	group = 'com.elytradev'
 	projectName = 'Ville'
 
-	useElytraVersionFormat = true
+	useElytraVersionFormat = false
 	version = '1.12.1-0.1.0'
 
 	concreteVersion = '0.3.1'
-	concreteModules = [ 'common', 'gui' ]
+	concreteModules = [ 'all' ]
 
 	coremod = null
 	miniVersion = null
 
 	language = 'java'
 
-	forge = '1.12-14.21.0.2359'
-	mappings = 'snapshot_20170624'
+	forge = '1.12-14.21.0.2373'
+	mappings = 'snapshot_20170623'
 
 	enforceLicenseHeaders = true
 

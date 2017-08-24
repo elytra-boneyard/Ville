@@ -69,6 +69,9 @@ public final class Ville {
 
     public static final CreativeTabs CREATIVE_TAB = new VilleCreativeTab(Ville.MOD_ID);
 
+    @Mod.Instance
+    public static Ville INSTANCE;
+
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {

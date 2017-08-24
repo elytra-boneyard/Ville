@@ -3,6 +3,7 @@ package com.elytradev.ville.entity;
 import com.elytradev.ville.Ville;
 import com.elytradev.ville.entity.ai.EntityAILookAtCustomer;
 import com.elytradev.ville.entity.ai.EntityAIMerchant;
+import com.elytradev.ville.registry.GuiRegistry;
 import com.google.common.base.Predicate;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -13,20 +14,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.stats.StatList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
 public class EntityPigman extends EntityAgeable implements INpc, IExtendedMerchant {
+
+    private EntityPlayer customer;
+
     public EntityPigman(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
@@ -74,13 +79,13 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
 
     @Override
     public void setCustomer(@Nullable EntityPlayer player) {
-
+        this.customer = player;
     }
 
     @Nullable
     @Override
     public EntityPlayer getCustomer() {
-        return null;
+        return this.customer;
     }
 
     @Override
@@ -90,8 +95,35 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
 
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
-        player.sendMessage(new TextComponentString("<Pigman> Test test, 1 2 3!"));
-        return true;
+        ItemStack itemstack = player.getHeldItem(hand);
+        boolean flag = itemstack.getItem() == Items.NAME_TAG;
+
+        if (flag)
+        {
+            itemstack.interactWithEntity(player, this, hand);
+            return true;
+        }
+        else if (!this.holdingSpawnEggOfClass(itemstack, this.getClass()) && this.isEntityAlive() && !this.isTrading() && !this.isChild())
+        {
+            if (!this.world.isRemote)
+            {
+                this.setCustomer(player);
+                player.openGui(Ville.INSTANCE, GuiRegistry.GUI_EXTENDED_MERCHANT, this.world, this.getEntityId(), 0, 0);
+            }
+
+            return false;
+        }
+        else
+        {
+            return super.processInteract(player, hand);
+        }
+
+    }
+
+
+    @Override
+    public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
+        return EnumActionResult.FAIL;
     }
 
     @Override
@@ -138,15 +170,6 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
     }
 
     @Override
-    public void onUpdate() {
-        super.onUpdate();
-        if(!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-            this.setDead();
-        }
-
-    }
-
-    @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
         return this.isEntityInvulnerable(source)?false:super.attackEntityFrom(source, amount);
     }
@@ -180,21 +203,5 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
         }
 
         return flag;
-    }
-
-    @Override
-    public void onDeath(DamageSource cause) {
-        if(cause.getImmediateSource() instanceof EntityZombie) {
-            EntityPigZombie zombie = new EntityPigZombie(this.world);
-            zombie.copyLocationAndAnglesFrom(this);
-            zombie.setItemStackToSlot(EntityEquipmentSlot.HEAD, this.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.CHEST, this.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.LEGS, this.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.FEET, this.getItemStackFromSlot(EntityEquipmentSlot.FEET));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND));
-            zombie.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, this.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND));
-            world.spawnEntity(zombie);
-            this.world.playEvent(null, 1026, new BlockPos(this), 0);
-        }
     }
 }

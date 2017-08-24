@@ -27,11 +27,15 @@
 
 package com.elytradev.ville.proxy;
 
+import com.elytradev.ville.Ville;
+import com.elytradev.ville.registry.GuiRegistry;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class CommonProxy {
 
     public void init() {
+        NetworkRegistry.INSTANCE.registerGuiHandler(Ville.INSTANCE, new GuiRegistry());
     }
 
     public void registerItemRenderer(Item item, int meta, String id) {
