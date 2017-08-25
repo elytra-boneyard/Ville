@@ -5,6 +5,7 @@ import com.elytradev.concrete.inventory.gui.widget.WItemSlot;
 import com.elytradev.concrete.inventory.gui.widget.WPlainPanel;
 import com.elytradev.ville.entity.IExtendedMerchant;
 import com.elytradev.ville.gui.WExtendedMerchantResultSlot;
+import com.elytradev.ville.gui.WItemImage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -33,6 +34,9 @@ public class ContainerExtendedMerchant extends ConcreteContainer {
         panel.add(new WExtendedMerchantResultSlot(merchant, merchantInventory, 2), 120, 53);
         panel.add(WItemSlot.ofPlayerStorage(playerInventory), 0, 84);
         panel.add(WItemSlot.of(playerInventory, 0, 9, 1), 0, 144);
+        panel.add(new WItemImage(), 36, 24);
+        panel.add(new WItemImage(), 62, 24);
+        panel.add(new WItemImage(), 120, 24);
     }
 
     @Override
