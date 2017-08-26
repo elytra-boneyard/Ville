@@ -30,7 +30,6 @@ package com.elytradev.ville.gui;
 
 import com.elytradev.concrete.inventory.gui.widget.WWidget;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

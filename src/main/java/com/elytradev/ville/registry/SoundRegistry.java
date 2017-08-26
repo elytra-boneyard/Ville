@@ -29,7 +29,6 @@ package com.elytradev.ville.registry;
 
 
 import com.elytradev.ville.Ville;
-import net.minecraft.client.audio.Sound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;

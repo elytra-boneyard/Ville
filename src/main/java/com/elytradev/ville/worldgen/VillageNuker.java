@@ -41,13 +41,14 @@ import java.util.Map;
 
 public class VillageNuker {
 
-    @SubscribeEvent
-    public void nukeVillages(InitMapGenEvent event) {
-        if(event.getType() == InitMapGenEvent.EventType.VILLAGE) {
-            event.setNewGen(new EmptyGen());
-        }
-    }
-
+    /*  Q: Why two methods?
+     *
+     *  TL;DR: Because flatworld generation doesn't adhere to any of the rules, and is just a dick.
+     *
+     *  It uses MapGenVillage instead of a call to the event bus, like ChunkGeneratorOverworld uses, so
+     *  instead we're left doing this hacky shit. We hook into WorldEvent. CreateSpawnPosition for world creation,
+     *  and WorldEvent.Load for world loading, so that both times the flatworld generation doesn't get its way.
+     */
     @SubscribeEvent
     public void nukeFlatworldVillagesOnCreation(WorldEvent.CreateSpawnPosition event) {
         if(event.getWorld().getChunkProvider() instanceof ChunkProviderServer) {
@@ -69,6 +70,14 @@ public class VillageNuker {
                         "structureGenerators", "field_82696_f");
                 generators.get(serverProvider.chunkGenerator).remove("Village");
             }
+        }
+    }
+
+    // Meanwhile, look how crazy simple Overworld village nuking is:
+    @SubscribeEvent
+    public void nukeVillages(InitMapGenEvent event) {
+        if(event.getType() == InitMapGenEvent.EventType.VILLAGE) {
+            event.setNewGen(new EmptyGen());
         }
     }
 }

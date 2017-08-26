@@ -30,7 +30,6 @@ package com.elytradev.ville.entity.ai;
 import com.elytradev.ville.entity.IExtendedMerchant;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class EntityAIMerchant<T extends EntityLiving & IExtendedMerchant> extends EntityAIBase {

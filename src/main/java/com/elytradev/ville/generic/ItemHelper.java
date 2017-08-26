@@ -25,23 +25,25 @@
  *
  */
 
-package com.elytradev.ville.inventory;
-
-import com.elytradev.concrete.inventory.ConcreteItemStorage;
-import com.elytradev.concrete.inventory.ValidatedInventoryView;
-import com.elytradev.concrete.inventory.Validators;
-import com.elytradev.ville.entity.IExtendedMerchant;
-import net.minecraft.entity.player.InventoryPlayer;
+package com.elytradev.ville.generic;
 
 
-public class InventoryExtendedMerchant extends ValidatedInventoryView {
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
-    protected InventoryPlayer player;
-    protected IExtendedMerchant merchant;
+public class ItemHelper {
+    public static ItemStack colorArmor(ItemStack armorPiece, int color) {
+        NBTTagCompound compound = armorPiece.getTagCompound();
+        NBTTagCompound display = new NBTTagCompound();
 
-    public InventoryExtendedMerchant(InventoryPlayer player, IExtendedMerchant merchant) {
-        super(new ConcreteItemStorage(3).withValidators(Validators.ANYTHING, Validators.ANYTHING, Validators.NOTHING).withName("Pigman"));
-        this.player = player;
-        this.merchant = merchant;
+        if(compound == null)
+            compound = new NBTTagCompound();
+
+        display.setInteger("color", color);
+        compound.setTag("display", display);
+
+        armorPiece.setTagCompound(compound);
+
+        return armorPiece;
     }
 }

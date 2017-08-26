@@ -28,14 +28,24 @@
 package com.elytradev.ville.proxy;
 
 import com.elytradev.ville.Ville;
+import com.elytradev.ville.entity.PigmanProfession;
 import com.elytradev.ville.registry.GuiRegistry;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 public class CommonProxy {
 
     public void init() {
         NetworkRegistry.INSTANCE.registerGuiHandler(Ville.INSTANCE, new GuiRegistry());
+
+        PigmanProfession.PIGMAN_PROFESSION_REGISTRY =
+                new RegistryBuilder<PigmanProfession>()
+                        .setName(new ResourceLocation(Ville.MOD_ID, "pigmanProfessions"))
+                        .setType(PigmanProfession.class)
+                        .setIDRange(0,65535)
+                        .create();
     }
 
     public void registerItemRenderer(Item item, int meta, String id) {

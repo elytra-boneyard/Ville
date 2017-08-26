@@ -1,8 +1,8 @@
 [
   {
-    "modid": "smores",
-    "name": "Smores",
-    "description": "A metals/gems/ores base mod, removing the necessity of duplicated materials.",
+    "modid": "ville",
+    "name": "Ville",
+    "description": "Nuking caveman squidwards, so you don't have to.",
     "version": "1.11.2-0.1.0.0",
     "mcversion": "1.11.2",
     "url": "https://github.com/elytra/Smores",

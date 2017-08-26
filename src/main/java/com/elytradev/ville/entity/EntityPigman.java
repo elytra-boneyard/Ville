@@ -41,27 +41,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class EntityPigman extends EntityAgeable implements INpc, IExtendedMerchant {
 
     private EntityPlayer customer;
+    private PigmanProfession profession;
 
     public EntityPigman(World worldIn) {
         super(worldIn);
         this.setSize(0.6F, 1.95F);
+        this.profession = PigmanProfession.PIGMAN_PROFESSION_REGISTRY.getValues().get(rand.nextInt(PigmanProfession.PIGMAN_PROFESSION_REGISTRY.getKeys().size()));
     }
 
     @Override
@@ -177,12 +176,9 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
 
     @Override
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-        this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET));
-        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE));
-        this.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS));
-        this.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.LEATHER_BOOTS));
-        this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.STONE_SWORD));
-        this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
+        for(Map.Entry<EntityEquipmentSlot, ItemStack> entry : profession.outfit.entrySet()) {
+            this.setItemStackToSlot(entry.getKey(), entry.getValue());
+        }
     }
 
     @Override
@@ -194,6 +190,10 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
         }
 
         super.onLivingUpdate();
+        List<Entity> ents =  new ArrayList<>();
+        for(Entity e : ents) {
+
+        }
     }
 
     @Override
@@ -230,5 +230,10 @@ public class EntityPigman extends EntityAgeable implements INpc, IExtendedMercha
         }
 
         return flag;
+    }
+
+    @Override
+    public String getName() {
+        return profession.getName();
     }
 }

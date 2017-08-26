@@ -27,24 +27,20 @@
 
 package com.elytradev.ville;
 
-import com.elytradev.concrete.reflect.accessor.Accessors;
-import com.elytradev.concrete.reflect.invoker.Invokers;
 import com.elytradev.ville.block.BlockBase;
 import com.elytradev.ville.entity.EntityPigman;
+import com.elytradev.ville.entity.PigmanProfession;
 import com.elytradev.ville.generic.VilleCreativeTab;
 import com.elytradev.ville.item.ItemBase;
 import com.elytradev.ville.proxy.CommonProxy;
-import com.elytradev.ville.worldgen.EmptyGen;
 import com.elytradev.ville.worldgen.VillageNuker;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -98,7 +94,10 @@ public final class Ville {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         PROXY.init();
+        PigmanProfession.registerProfessions();
     }
+
+
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
@@ -109,6 +108,11 @@ public final class Ville {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+
+    }
+
+    @SubscribeEvent
+    public void onRegisterPigmanProfessions(RegistryEvent.Register<PigmanProfession> event) {
 
     }
 

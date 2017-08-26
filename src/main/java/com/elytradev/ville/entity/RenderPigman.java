@@ -29,19 +29,14 @@ package com.elytradev.ville.entity;
 
 import com.elytradev.ville.Ville;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.model.ModelZombie;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -82,7 +77,7 @@ public class RenderPigman extends RenderLiving<EntityPigman> {
             float f1 = this.renderManager.playerViewX;
             boolean flag1 = this.renderManager.options.thirdPersonView == 2;
             float f2 = entityIn.height + 0.5F - (flag ? 0.25F : 0.0F);
-            EntityRenderer.drawNameplate(Minecraft.getMinecraft().standardGalacticFontRenderer, "Pigman", (float)x, (float)y + f2, (float)z, 0, f, f1, flag1, flag);
+            EntityRenderer.drawNameplate(Minecraft.getMinecraft().fontRenderer, entityIn.getName(), (float)x, (float)y + f2, (float)z, 0, f, f1, flag1, flag);
         }
     }
 }
